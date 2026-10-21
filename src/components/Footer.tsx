@@ -18,7 +18,13 @@ function getQuartzVersion(): string {
 }
 
 export interface FooterOptions {
-  links: Record<string, string>;
+  links?: Record<string, string>;
+  /** Raw HTML shown on pages whose slug starts with one of `extraOnPrefixes`. */
+  acknowledgement?: string;
+  /** Raw HTML shown on pages whose slug starts with one of `extraOnPrefixes`. */
+  funding?: string;
+  /** Slug prefixes (case-insensitive) that show acknowledgement + funding, e.g. ["DECRA"]. */
+  extraOnPrefixes?: string[];
 }
 
 export default ((opts?: FooterOptions) => {
@@ -29,10 +35,11 @@ export default ((opts?: FooterOptions) => {
     const links = opts?.links ?? [];
 
 	// sjgknight to determine the appropriate footer component based on the slug
-	const slug = fileData.slug
+    const slug = (fileData?.slug ?? "").toLowerCase();
 	// Custom fields to retrieve and add on key slug page
-	const acknowl = opts?.acknowledgement ?? []
-	const fund = opts?.funding ?? []
+  const acknowledgement = opts?.acknowledgement ?? "";
+  const funding = opts?.funding ?? "";
+  const prefixes = (opts?.extraOnPrefixes ?? []).map((p) => p.toLowerCase());
 	
 	// in the below, to return the variables as raw text you can use {fund} instead of the spans, the spans allow html rendering  
     return (
