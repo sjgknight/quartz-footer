@@ -35,7 +35,7 @@ export default ((opts?: FooterOptions) => {
   const funding = opts?.funding ?? "";
   const prefixes = (opts?.extraOnPrefixes ?? []).map((p) => p.toLowerCase());
 
-  const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
+ const Footer: QuartzComponent = ({ fileData, displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear();
     const links = opts?.links ?? [];
 
