@@ -1,18 +1,17 @@
 {
-  "name": "@quartz-community/footer",
+  "name": "@sjgknight/footer",
   "version": "1.0.0",
   "description": "Footer component for Quartz - displays site footer with links and version",
   "type": "module",
   "license": "MIT",
-  "author": "Quartz Community",
-  "homepage": "https://github.com/quartz-community/footer",
+  "author": "Quartz Community + sjgknight",
+  "homepage": "https://github.com/sjgknight/quartz-footer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quartz-community/footer"
+    "url": "https://github.com/sjgknight/quartz-footer"
   },
   "keywords": [
     "quartz",
-    "quartz-plugin",
     "footer",
     "component"
   ],
@@ -80,7 +79,7 @@
     "npm": ">=10.9.2"
   },
   "quartz": {
-    "name": "footer",
+    "name": "quartz-footer",
     "displayName": "Footer",
     "category": "component",
     "version": "1.0.0",
