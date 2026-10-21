@@ -29,6 +29,11 @@ export interface FooterOptions {
 
 export default ((opts?: FooterOptions) => {
   const version = getQuartzVersion();
+	
+  // sjgknight: custom fields to add on key sections of the site
+  const acknowledgement = opts?.acknowledgement ?? "";
+  const funding = opts?.funding ?? "";
+  const prefixes = (opts?.extraOnPrefixes ?? []).map((p) => p.toLowerCase());
 
   const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear();
@@ -37,9 +42,7 @@ export default ((opts?: FooterOptions) => {
 	// sjgknight to determine the appropriate footer component based on the slug
     const slug = (fileData?.slug ?? "").toLowerCase();
 	// Custom fields to retrieve and add on key slug page
-  const acknowledgement = opts?.acknowledgement ?? "";
-  const funding = opts?.funding ?? "";
-  const prefixes = (opts?.extraOnPrefixes ?? []).map((p) => p.toLowerCase());
+    const showExtra = (acknowledgement || funding) && prefixes.some((p) => slug === p || slug.startsWith(p + "/"));
 	
 	// in the below, to return the variables as raw text you can use {fund} instead of the spans, the spans allow html rendering  
     return (
@@ -49,15 +52,14 @@ export default ((opts?: FooterOptions) => {
           <a href="https://quartz.jzhao.xyz/">Quartz{version ? ` v${version}` : ""}</a> &copy;{" "}
           {year}
         </p>
-        <p>
-		{slug.includes("DECRA") && (
-		  <>
-			<span dangerouslySetInnerHTML={{ __html: acknowl }}></span>
-			<br />
-			<span dangerouslySetInnerHTML={{ __html: fund }}></span>
-		  </>
-   			)}
-		</p>     
+{showExtra && (
+          <p>
+            {/* dangerouslySetInnerHTML lets the option strings contain links; use {funding} for plain text */}
+            <span dangerouslySetInnerHTML={{ __html: acknowledgement }}></span>
+            <br />
+            <span dangerouslySetInnerHTML={{ __html: funding }}></span>
+          </p>
+        )}
         <ul>
           {Object.entries(links).map(([text, link]) => (
             <li>
